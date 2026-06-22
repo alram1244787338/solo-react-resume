@@ -23,12 +23,6 @@ function buildBusinessLayout(htmlString) {
         headerDone = true;
         continue;
       }
-      if (node.nodeName === 'H2') {
-        headerDone = true;
-        currentSection = { title: node.textContent, html: '' };
-        sections.push(currentSection);
-        continue;
-      }
       headerHTML += node.outerHTML || node.textContent || '';
       continue;
     }
