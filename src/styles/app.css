@@ -213,6 +213,8 @@
 
 @media print {
   .layout__header,
+  .layout__title,
+  .toolbar,
   .layout__editor,
   .preview__header {
     display: none !important;
@@ -228,10 +230,13 @@
     width: 100% !important;
     display: block !important;
     overflow: visible !important;
+    height: auto !important;
+    min-height: auto !important;
   }
   .resume-page {
     box-shadow: none !important;
     padding: 0 !important;
+    margin: 0 !important;
     width: 100% !important;
     min-height: auto !important;
   }
