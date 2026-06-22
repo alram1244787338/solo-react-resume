@@ -1,22 +1,42 @@
-import React from 'react';
+import React, { useState, useCallback } from 'react';
+import Editor from './Editor';
+import Preview from './Preview';
+import Toolbar from './Toolbar';
+import mockResume from '../data/mockResume';
+import { templateStyles } from '../styles/templateStyles';
+import { exportHTML, exportPDF } from '../utils/exporter';
 
 function Layout() {
+  const [markdown, setMarkdown] = useState(mockResume);
+  const [templateId, setTemplateId] = useState('simple');
+
+  const handleExportHTML = useCallback(() => {
+    exportHTML(markdown, templateId, templateStyles);
+  }, [markdown, templateId]);
+
+  const handleExportPDF = useCallback(() => {
+    exportPDF();
+  }, []);
+
   return (
-    <div className="layout">
+    <div className={`layout layout--template-${templateId}`}>
       <header className="layout__header">
         <h1 className="layout__title">简历生成器</h1>
+        <Toolbar
+          templateId={templateId}
+          onTemplateChange={setTemplateId}
+          onExportHTML={handleExportHTML}
+          onExportPDF={handleExportPDF}
+        />
       </header>
-      <main className="layout__main">
-        <div className="layout__placeholder">
-          <p>项目框架已搭建完成</p>
-          <p className="layout__hint">
-            后续功能：Markdown 编辑 · 多模板预览 · 导出 PDF/HTML
-          </p>
-        </div>
+      <main className="layout__body">
+        <section className="layout__editor">
+          <Editor value={markdown} onChange={setMarkdown} />
+        </section>
+        <section className="layout__preview">
+          <Preview markdown={markdown} templateId={templateId} />
+        </section>
       </main>
-      <footer className="layout__footer">
-        <span>Resume Generator</span>
-      </footer>
     </div>
   );
 }
